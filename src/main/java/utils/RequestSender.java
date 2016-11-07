@@ -37,7 +37,12 @@ public class RequestSender {
                 .addBody(body);
         return this;
     }
-
+    public RequestSender createEmptyRequest() {
+        this.createRequestSpecification()
+                .addHeader("Content-Type", CONTENT_TYPE.toString())
+                .addHeader("Cookie", "JSESSIONID=" + RequestSender.JSESSIONID);
+        return this;
+    }
     public RequestSender createRequestSpecification() {
         requestSpecification = given().
                 when();

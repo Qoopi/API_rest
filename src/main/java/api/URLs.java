@@ -6,7 +6,8 @@ package api;
         LOGIN("/rest/auth/1/session"),
         ISSUE("/rest/api/2/issue"),
         PASSWORD("/rest/api/2/myself/password"),
-        FILTER("/rest/api/2/filter");
+        FILTER("/rest/api/2/filter"),
+        SEARCH("/rest/api/2/search");
         private String uri;
 
         URLs(String url) {

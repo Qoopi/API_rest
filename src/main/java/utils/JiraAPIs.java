@@ -13,21 +13,21 @@ public class JiraAPIs{
         return requestSender;
     }
 
-    public RequestSender deleteIssue(String body){
+    public RequestSender deleteIssue(String issueId){
         RequestSender requestSender = new RequestSender();
-        requestSender.createRequest(body).delete(URLs.ISSUE.getUri());
+        requestSender.createEmptyRequest().delete(URLs.ISSUE.getUri(issueId));
         return requestSender;
     }
 
-    public RequestSender editIssue(String body){
+    public RequestSender editIssue(String body,String issueId){
         RequestSender requestSender = new RequestSender();
-        requestSender.createRequest(body).put(URLs.ISSUE.getUri("QAAUT-38"));
+        requestSender.createRequest(body).put(URLs.ISSUE.getUri(issueId));
         return requestSender;
     }
 
-    public RequestSender commentIssue(String body){
+    public RequestSender commentIssue(String body, String issueId){
         RequestSender requestSender = new RequestSender();
-        requestSender.createRequest(body).put(URLs.ISSUE.getUri("QAAUT-38/comment"));
+        requestSender.createRequest(body).post(URLs.ISSUE.getUri(issueId)+"/comment");
         return requestSender;
     }
 
@@ -37,9 +37,9 @@ public class JiraAPIs{
         return requestSender;
     }
 
-    public RequestSender deleteFilter(String id){
+    public RequestSender deleteFilter(String filterId){
         RequestSender requestSender = new RequestSender();
-        requestSender.delete(URLs.FILTER.getUri());
+        requestSender.delete(URLs.FILTER.getUri(filterId));
         return requestSender;
     }
     public RequestSender chengeMyPassword(String password){

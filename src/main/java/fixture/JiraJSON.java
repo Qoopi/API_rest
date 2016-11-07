@@ -31,14 +31,14 @@ import org.json.simple.JSONObject;
             issuetype.put("id", "10004");
             assignee.put("name", "Geloksmmm");
             reporter.put("name", "Geloksmmm");
-
+            //priority.put("priority")
             String summary = "Shit HAPPEN";
             fields.put("project", project);
             fields.put("summary", summary);
             fields.put("issuetype", issuetype);
             fields.put("assignee", assignee);
             fields.put("reporter", reporter);
-            fields.put("priority", priority);
+           // fields.put("priority", priority);
             issue.put("fields", fields);
             return issue.toJSONString();
         }
@@ -79,10 +79,10 @@ import org.json.simple.JSONObject;
         public String genereteJSONForFILTER(){
 
                 JSONObject filter = new JSONObject();
-                filter.put("name", "All Open Bugs");
+                filter.put("name", "Bugs");
                 filter.put("description", "Lists all open bugs");
-                filter.put("jql", "type = bug and resolutions is empty");
-                filter.put("favorite", new Boolean(true));
+                filter.put("jql", "type = bug");
+               // filter.put("favorite", new Boolean(true));
             return filter.toJSONString();
         }
         public  String genereteJSONForPassword(){

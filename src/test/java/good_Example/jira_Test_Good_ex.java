@@ -16,7 +16,7 @@ public class jira_Test_Good_ex {
 
     utils.RequestSender requestSender = new utils.RequestSender();
     String filterId = null;
-    String issueId = null;
+    static String issueId = null;
     @BeforeTest(groups ={"Issue","Filter","MyAcc"} )
     public void login() {requestSender.authenticate();}
 
@@ -24,58 +24,57 @@ public class jira_Test_Good_ex {
     public void createIssue(){
         JiraJSON jiraJSON = new JiraJSON();
         String issue = jiraJSON.generateJSONSampleIssue();
-
         JiraAPIs jiraAPIs = new JiraAPIs();
         jiraAPIs.createIssue(issue);
            issueId =  requestSender.extractResponseByPath("id");
+
         assertEquals(RequestSender.response.getStatusCode(), 201);
         assertTrue(RequestSender.response.contentType().contains(ContentType.JSON.toString()));
     }
 
-    @Test(groups = {"Issue"},dependsOnMethods = {"createIssue"})
+    @Test(groups = {"Issue"})
     public void commentIssue(){
         JiraJSON jiraJSON = new JiraJSON();
         String comment = jiraJSON.genereteJSONForComment();
-
+        System.out.println(comment);
         JiraAPIs jiraAPIs = new JiraAPIs();
-        jiraAPIs.commentIssue(comment);
-
+        jiraAPIs.commentIssue(comment,issueId);
+        System.out.println(RequestSender.response.asString());
         assertEquals(RequestSender.response.getStatusCode(), 201);
         assertTrue(RequestSender.response.contentType().contains(ContentType.JSON.toString()));
     }
 
-    @Test(groups = {"Issue"}, dependsOnMethods = {"createIssue"})
+    @Test(groups = {"Issue"})
     public void editIssueType(){
         JiraJSON jiraJSON = new JiraJSON();
         String type = jiraJSON.genereteJSONForEditIssueType();
 
         JiraAPIs jiraAPIs = new JiraAPIs();
-        jiraAPIs.editIssue(type);
+        jiraAPIs.editIssue(type,issueId);
 
         assertEquals(requestSender.response.getStatusCode(), 204);
         assertTrue(RequestSender.response.contentType().contains(ContentType.JSON.toString()));
 
     }
 
-    @Test(groups = {"Issue"},dependsOnMethods = {"createIssue"})
+    @Test(groups = {"Issue"})
     public void editIssueSumury() {
         JiraJSON jiraJSON = new JiraJSON();
         String summary = jiraJSON.genereteJSONForEditIssueSummary();
 
         JiraAPIs jiraAPIs = new JiraAPIs();
-        jiraAPIs.editIssue(summary);
+        jiraAPIs.editIssue(summary,issueId);
 
         assertEquals(RequestSender.response.getStatusCode(), 204);
         assertTrue(RequestSender.response.contentType().contains(ContentType.JSON.toString()));
     }
 
-    @Test(groups = {"Issue"})
+    @Test(groups = {"Issue"},dependsOnMethods = {"createIssue","editIssueType","commentIssue","editIssueSumury"},alwaysRun = true)
     public void deleteIssue(){
         JiraAPIs jiraAPIs = new JiraAPIs();
         jiraAPIs.deleteIssue(issueId);
 
         assertEquals(RequestSender.response.getStatusCode(), 204);
-        assertTrue(RequestSender.response.contentType().contains(ContentType.JSON.toString()));
     }
 
     @Test(groups = {"Filter"})
@@ -86,7 +85,7 @@ public class jira_Test_Good_ex {
         JiraAPIs jiraAPIs = new JiraAPIs();
         jiraAPIs.createFilter(filter);
         filterId = RequestSender.extractResponseByPath("id");
-        System.out.println(filterId);
+        System.out.println(RequestSender.response.asString());
         assertEquals(RequestSender.response.getStatusCode(), 200);
         assertTrue(RequestSender.response.contentType().contains(ContentType.JSON.toString()));
     }
