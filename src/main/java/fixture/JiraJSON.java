@@ -8,8 +8,8 @@ import org.json.simple.JSONObject;
 
     public class JiraJSON {
 
-        private static String name = "Geloksmmm";
-        private static String password = "some_passwor";
+        private static String name = "some_user_name";
+        private static String password = "some_password";
 
         public String generateJSONForLogin() {
             JSONObject credentials = new JSONObject();
