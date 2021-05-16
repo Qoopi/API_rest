@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
     public class JiraJSON {
 
         private static String name = "Geloksmmm";
-        private static String password = "Q125478963q";
+        private static String password = "some_passwor";
 
         public String generateJSONForLogin() {
             JSONObject credentials = new JSONObject();
